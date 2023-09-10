@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Github_Viewer2</string>
+
+    <string name="error_unknown">Unknown error</string>
+    <string name="error_no_connection">No network connection</string>
+    <string name="error_no_connection_server">There is no connection to the server, repeat later</string>
+    <string name="error_http">An error has occurred accessing the server, inform the developers about it</string>
+    <string name="error_server_again">An error occurred on the server, try again later</string>
+
+    <string name="message_success">The message has been sent</string>
 </resources>
