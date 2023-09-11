@@ -59,7 +59,7 @@ class SearchFragment : Fragment() {
             object : MenuProvider {
                 override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                     menuInflater.inflate(R.menu.toolbar_menu, menu)
-                    val searchViewItem = menu.findItem(R.id.search_bar);
+                    val searchViewItem = menu.findItem(R.id.search_bar)
                     searchView = (searchViewItem.actionView as? SearchView)
                     setSearchViewListener()
                 }

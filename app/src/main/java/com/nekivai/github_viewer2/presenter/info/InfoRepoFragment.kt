@@ -42,7 +42,7 @@ class InfoRepoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        activity?.actionBar?.setDisplayHomeAsUpEnabled(true)
+        activity?.onNavigateUp()
 
         binding.setAdapter()
         collectUiState(viewModel.viewState, ::updateStateView)
