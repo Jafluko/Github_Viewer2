@@ -2,8 +2,6 @@ package com.nekivai.github_viewer2.presenter
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
 import com.nekivai.github_viewer2.R
 import dagger.hilt.android.AndroidEntryPoint
 

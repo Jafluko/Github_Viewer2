@@ -1,14 +1,26 @@
 package com.nekivai.github_viewer2.presenter.search
 
 import android.os.Bundle
+import android.util.Log
+import android.view.ContextMenu
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
+import android.widget.SearchView.OnQueryTextListener
+import android.widget.Toolbar
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuItemCompat
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.nekivai.github_viewer2.R
 import com.nekivai.github_viewer2.common.collectUiState
 import com.nekivai.github_viewer2.common.collectUiStateFlow
 import com.nekivai.github_viewer2.databinding.FragmentSearchBinding
@@ -29,6 +41,9 @@ class SearchFragment : Fragment() {
 
     private val listAdapter = SearchAdapter()
 
+    private var searchView: SearchView? = null
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,6 +54,22 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (activity as? MenuHost)?.addMenuProvider(
+            object : MenuProvider {
+                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                    menuInflater.inflate(R.menu.toolbar_menu, menu)
+                    val searchViewItem = menu.findItem(R.id.search_bar);
+                    searchView = (searchViewItem.actionView as? SearchView)
+                    setSearchViewListener()
+                }
+
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                    return false
+                }
+
+            }, viewLifecycleOwner
+        )
 
         binding.setAdapter()
         collectUiStateFlow(viewModel.viewState, ::updateState)
@@ -57,6 +88,22 @@ class SearchFragment : Fragment() {
 
     private suspend fun updateState(state: PagingData<SearchItem>) {
         listAdapter.submitData(state)
+    }
+
+    private fun setSearchViewListener() {
+        searchView?.setOnQueryTextListener(
+            object : OnQueryTextListener {
+                override fun onQueryTextSubmit(p0: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(newValue: String?): Boolean {
+                    viewModel.changeContext(newValue)
+                    return false
+                }
+
+            }
+        )
     }
 
     override fun onDestroyView() {
