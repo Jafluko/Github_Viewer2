@@ -9,7 +9,9 @@ import com.nekivai.github_viewer2.common.loadUriWithCover
 import com.nekivai.github_viewer2.databinding.ItemSearchBinding
 import com.nekivai.github_viewer2.domain.models.SearchItem
 
-class SearchAdapter : PagingDataAdapter<SearchItem, SearchItemViewHolder>(SearchItemDiffCallback()) {
+class SearchAdapter(
+    private val onClick: (owner: String, repo: String) -> Unit,
+) : PagingDataAdapter<SearchItem, SearchAdapter.SearchItemViewHolder>(SearchItemDiffCallback()) {
     override fun onBindViewHolder(holder: SearchItemViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
@@ -21,20 +23,23 @@ class SearchAdapter : PagingDataAdapter<SearchItem, SearchItemViewHolder>(Search
             binding = ItemSearchBinding.inflate(layoutInflater, parent, false)
         )
     }
-}
 
-class SearchItemViewHolder(
-    private val binding: ItemSearchBinding
-) : ViewHolder(binding.root) {
+    inner class SearchItemViewHolder(
+        private val binding: ItemSearchBinding
+    ) : ViewHolder(binding.root) {
 
-    fun bind(item: SearchItem?) {
-        item ?: return
-        binding.apply {
-            avatar.loadUriWithCover(
-                uri = item.owner.avatarUrl
-            )
-            title.text = item.name
-            description.text = item.description
+        fun bind(item: SearchItem?) {
+            item ?: return
+            binding.apply {
+                avatar.loadUriWithCover(
+                    uri = item.owner.avatarUrl
+                )
+                title.text = item.name
+                description.text = item.description
+                root.setOnClickListener {
+                    onClick(item.owner.login, item.name)
+                }
+            }
         }
     }
 }

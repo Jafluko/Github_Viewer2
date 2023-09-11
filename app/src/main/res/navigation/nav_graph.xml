@@ -17,8 +17,19 @@
 
     <fragment
         android:id="@+id/info"
-        android:name="com.nekivai.github_viewer2.presenter.info.InfoFragment"
+        android:name="com.nekivai.github_viewer2.presenter.info.InfoRepoFragment"
         tools:layout="@layout/fragment_info"
-        android:label="Info"/>
+        android:label="Info">
+
+        <argument
+            android:name="ownerName"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="repoName"
+            app:argType="string"
+            app:nullable="true"/>
+
+    </fragment>
 
 </navigation>

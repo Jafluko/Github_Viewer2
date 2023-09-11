@@ -1,9 +1,6 @@
 package com.nekivai.github_viewer2.presenter.search
 
 import android.os.Bundle
-import android.util.Log
-import android.view.ContextMenu
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -12,23 +9,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.SearchView.OnQueryTextListener
-import android.widget.Toolbar
 import androidx.core.view.MenuHost
-import androidx.core.view.MenuItemCompat
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nekivai.github_viewer2.R
-import com.nekivai.github_viewer2.common.collectUiState
+import com.nekivai.github_viewer2.common.collectUiEffect
 import com.nekivai.github_viewer2.common.collectUiStateFlow
+import com.nekivai.github_viewer2.common.safeNavigate
+import com.nekivai.github_viewer2.common.showToast
 import com.nekivai.github_viewer2.databinding.FragmentSearchBinding
 import com.nekivai.github_viewer2.domain.models.SearchItem
 import com.nekivai.github_viewer2.presenter.search.adapter.FooterAdapter
 import com.nekivai.github_viewer2.presenter.search.adapter.SearchAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
@@ -39,7 +35,11 @@ class SearchFragment : Fragment() {
 
     private val viewModel: SearchViewModel by viewModels()
 
-    private val listAdapter = SearchAdapter()
+    private val listAdapter: SearchAdapter by lazy {
+        SearchAdapter(
+            onClick = viewModel::moveInfoRepo
+        )
+    }
 
     private var searchView: SearchView? = null
 
@@ -73,6 +73,7 @@ class SearchFragment : Fragment() {
 
         binding.setAdapter()
         collectUiStateFlow(viewModel.viewState, ::updateState)
+        collectUiEffect(viewModel.viewEffects, ::reactTo)
     }
 
     private fun FragmentSearchBinding.setAdapter() {
@@ -88,6 +89,23 @@ class SearchFragment : Fragment() {
 
     private suspend fun updateState(state: PagingData<SearchItem>) {
         listAdapter.submitData(state)
+    }
+
+    private fun reactTo(viewEffects: SearchViewEffects) {
+        when (viewEffects) {
+            is SearchViewEffects.ShowMessage -> {
+                showToast(viewEffects.message)
+            }
+
+            is SearchViewEffects.MoveInfoRepo -> {
+                safeNavigate(
+                    SearchFragmentDirections.actionSearchToInfo(
+                        ownerName = viewEffects.ownerName,
+                        repoName = viewEffects.repoName,
+                    )
+                )
+            }
+        }
     }
 
     private fun setSearchViewListener() {

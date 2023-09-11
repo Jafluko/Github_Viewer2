@@ -14,6 +14,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.switchMap
 import kotlinx.coroutines.flow.transformLatest
@@ -28,6 +29,9 @@ class SearchViewModel @Inject constructor(
 
     private val _contextQuery = MutableStateFlow(EMPTY_CONTEXT)
     private var searchJob: Job? = null
+
+    private val _viewEffects = MutableSharedFlow<SearchViewEffects>()
+    val viewEffects = _viewEffects.asSharedFlow()
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val viewState = _contextQuery.flatMapLatest { context ->
@@ -53,6 +57,12 @@ class SearchViewModel @Inject constructor(
                     if (context.isNullOrBlank()) EMPTY_CONTEXT else context
                 )
             }
+        }
+    }
+
+    fun moveInfoRepo(ownerName: String, repoName: String) {
+        viewModelScope.launch {
+            _viewEffects.emit(SearchViewEffects.MoveInfoRepo(ownerName, repoName))
         }
     }
 
