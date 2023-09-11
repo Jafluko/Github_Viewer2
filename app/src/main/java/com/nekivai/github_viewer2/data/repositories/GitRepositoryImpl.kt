@@ -17,10 +17,10 @@ class GitRepositoryImpl @Inject constructor(
         context: String,
         page: Int,
         limit: Int
-    ): Response<List<SearchItem>> {
-        return wrapRequest(
+    ): List<SearchItem> {
+        return wrapRequestWithotResponse(
             request = { api.search(context, page, limit) },
-            mapper = { data -> data.map { it.toDomain() } }
+            mapper = { data -> data.items?.map { it.toDomain() } ?: emptyList() }
         )
     }
 

@@ -2,6 +2,7 @@ package com.nekivai.github_viewer2.data.source.network
 
 import com.nekivai.github_viewer2.data.source.dto.IssueDto
 import com.nekivai.github_viewer2.data.source.dto.RepoDto
+import com.nekivai.github_viewer2.data.source.dto.ResponseDto
 import com.nekivai.github_viewer2.data.source.dto.SearchItemDto
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -14,7 +15,7 @@ interface GitApi {
         @Query("q") context: String,
         @Query("page") page: Int,
         @Query("per_page") limit: Int,
-    ): List<SearchItemDto>
+    ): ResponseDto<List<SearchItemDto>>
 
     @GET("repos/{owner}/{repo}")
     suspend fun getInfo(

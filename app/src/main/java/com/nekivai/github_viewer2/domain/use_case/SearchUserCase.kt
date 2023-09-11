@@ -11,7 +11,7 @@ class SearchUserCase @Inject constructor(private val repository: GitRepository) 
         context: String,
         page: Int,
         limit: Int,
-    ): Response<List<SearchItem>> {
+    ): List<SearchItem> {
         return repository.search(context, page, limit)
     }
 }

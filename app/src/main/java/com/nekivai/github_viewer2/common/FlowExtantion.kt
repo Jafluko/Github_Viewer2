@@ -5,6 +5,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -36,6 +37,18 @@ inline fun <ViewEffect> Fragment.collectUiEffect(
 inline fun <ViewState> Fragment.collectUiState(
     viewState: StateFlow<ViewState>,
     crossinline updateScreenState: (viewState: ViewState) -> Unit,
+    minActiveState: Lifecycle.State = Lifecycle.State.STARTED
+) {
+    launchAndRepeatWithViewLifecycle(minActiveState) {
+        viewState.collectLatest {
+            updateScreenState.invoke(it)
+        }
+    }
+}
+
+inline fun <ViewState> Fragment.collectUiStateFlow(
+    viewState: Flow<ViewState>,
+    crossinline updateScreenState: suspend (viewState: ViewState) -> Unit,
     minActiveState: Lifecycle.State = Lifecycle.State.STARTED
 ) {
     launchAndRepeatWithViewLifecycle(minActiveState) {

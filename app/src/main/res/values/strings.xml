@@ -8,4 +8,6 @@
     <string name="error_server_again">An error occurred on the server, try again later</string>
 
     <string name="message_success">The message has been sent</string>
+
+    <string name="retry">Retry</string>
 </resources>

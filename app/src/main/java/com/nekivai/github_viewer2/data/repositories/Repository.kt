@@ -50,4 +50,40 @@ open class Repository(
             }
         }
     }
+
+    protected suspend fun <Dto, Domain> wrapRequestWithotResponse(
+        request: suspend () -> Dto?,
+        mapper: suspend (Dto) -> Domain,
+    ): Domain {
+        return withContext(dispatcher) {
+            try {
+                when(val response = request()) {
+                    null -> {
+                        throw GitException.ResponseDtoEqualNullException
+                    }
+                    else -> {
+                        try {
+                            mapper(response)
+                        } catch (e: Exception) {
+                            throw GitException.MapperException(cause = e)
+                        }
+                    }
+                }
+            } catch (e: CancellationException) {
+                e.printStackTrace()
+                throw e
+            } catch (e: IOException) {
+                e.printStackTrace()
+                throw e
+            } catch (e: HttpException) {
+                throw e
+            } catch (e: SSLHandshakeException) {
+                throw e
+            } catch (e: GitException) {
+                throw e
+            }  catch (e: Exception) {
+                throw e
+            }
+        }
+    }
 }
