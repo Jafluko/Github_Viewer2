@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.retry
 import kotlinx.coroutines.flow.switchMap
 import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.isActive
@@ -53,9 +54,7 @@ class SearchViewModel @Inject constructor(
         searchJob = viewModelScope.launch {
             delay(DEFAULT_DELAY_PRINTING)
             if (isActive) {
-                _contextQuery.emit(
-                    if (context.isNullOrBlank()) EMPTY_CONTEXT else context
-                )
+                _contextQuery.value = if (context.isNullOrBlank()) EMPTY_CONTEXT else context
             }
         }
     }
@@ -68,7 +67,7 @@ class SearchViewModel @Inject constructor(
 
     companion object {
         private const val EMPTY_CONTEXT = "null"
-        private const val DEFAULT_LIMIT = 8
+        private const val DEFAULT_LIMIT = 16
         private const val DEFAULT_DELAY_PRINTING = 300L
     }
 }

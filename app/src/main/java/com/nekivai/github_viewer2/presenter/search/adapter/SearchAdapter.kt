@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.nekivai.github_viewer2.R
 import com.nekivai.github_viewer2.common.loadUriWithCover
 import com.nekivai.github_viewer2.databinding.ItemSearchBinding
 import com.nekivai.github_viewer2.domain.models.SearchItem
@@ -32,9 +33,10 @@ class SearchAdapter(
             item ?: return
             binding.apply {
                 avatar.loadUriWithCover(
-                    uri = item.owner.avatarUrl
+                    uri = item.owner.avatarUrl,
+                    placeHolderId = R.drawable.pic_avatar_placeholder,
                 )
-                title.text = item.name
+                title.text = "${item.owner.login}/${item.name}"
                 description.text = item.description
                 root.setOnClickListener {
                     onClick(item.owner.login, item.name)

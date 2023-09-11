@@ -64,7 +64,8 @@ class InfoViewModel @Inject constructor(
         when(val response = issueUseCase.get(ownerName, repoName, DEFAULT_LIMIT)) {
             is Response.Success -> {
                 _viewState.value = _viewState.value.copy(
-                    listIssue = response.data
+                    listIssue = response.data,
+                    isLoadEnd = true,
                 )
             }
             is Response.Error -> {

@@ -23,7 +23,7 @@ class SearchPagingSource @Inject constructor(
         return try {
             val nextPageNumber = params.key ?: START_PAGE
             val response = searchUserCase.search(context, nextPageNumber, params.loadSize)
-            return LoadResult.Page(
+            LoadResult.Page(
                 data = response,
                 prevKey = if (nextPageNumber == START_PAGE) null else nextPageNumber.minus(1),
                 nextKey = if (response.isEmpty()) null else nextPageNumber.plus(1),

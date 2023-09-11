@@ -11,13 +11,18 @@ import android.widget.SearchView
 import android.widget.SearchView.OnQueryTextListener
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
+import androidx.paging.LoadStates
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nekivai.github_viewer2.R
 import com.nekivai.github_viewer2.common.collectUiEffect
-import com.nekivai.github_viewer2.common.collectUiStateFlow
+import com.nekivai.github_viewer2.common.collectUiStateByFlow
+import com.nekivai.github_viewer2.common.collectUiStateByFlowWithoutSuspend
 import com.nekivai.github_viewer2.common.safeNavigate
 import com.nekivai.github_viewer2.common.showToast
 import com.nekivai.github_viewer2.databinding.FragmentSearchBinding
@@ -72,17 +77,20 @@ class SearchFragment : Fragment() {
         )
 
         binding.setAdapter()
-        collectUiStateFlow(viewModel.viewState, ::updateState)
+        collectUiStateByFlow(viewModel.viewState, ::updateState)
         collectUiEffect(viewModel.viewEffects, ::reactTo)
+        collectUiStateByFlowWithoutSuspend(listAdapter.loadStateFlow, ::loadState)
+
+        binding.btnRetry.setOnClickListener {
+            listAdapter.refresh()
+        }
     }
 
     private fun FragmentSearchBinding.setAdapter() {
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = listAdapter.withLoadStateFooter(
-                FooterAdapter {
-                    listAdapter::retry
-                }
+                FooterAdapter(listAdapter::retry)
             )
         }
     }
@@ -122,6 +130,16 @@ class SearchFragment : Fragment() {
 
             }
         )
+    }
+
+    private fun loadState(loadStates: CombinedLoadStates) {
+        binding.apply {
+            progressBar.isVisible = loadStates.refresh is LoadState.Loading
+            btnRetry.isVisible =
+                loadStates.refresh !is LoadState.Loading && loadStates.refresh is LoadState.Error
+            tvError.isVisible = loadStates.refresh is LoadState.Error
+            recyclerView.isVisible = loadStates.refresh !is LoadState.Error
+        }
     }
 
     override fun onDestroyView() {

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.nekivai.github_viewer2.R
 import com.nekivai.github_viewer2.common.loadUriWithCover
 import com.nekivai.github_viewer2.databinding.ItemIssueBinding
 import com.nekivai.github_viewer2.domain.models.Issue
@@ -29,6 +30,7 @@ class IssueAdapter : ListAdapter<Issue, IssueAdapter.IssueViewHolder>(IssueDiffC
             binding.apply {
                 avatar.loadUriWithCover(
                     uri = item.owner.avatarUrl,
+                    placeHolderId = R.drawable.pic_avatar_placeholder,
                 )
                 title.text = item.title
                 status.text = item.state

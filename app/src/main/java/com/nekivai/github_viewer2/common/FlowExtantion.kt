@@ -46,9 +46,21 @@ inline fun <ViewState> Fragment.collectUiState(
     }
 }
 
-inline fun <ViewState> Fragment.collectUiStateFlow(
+inline fun <ViewState> Fragment.collectUiStateByFlow(
     viewState: Flow<ViewState>,
     crossinline updateScreenState: suspend (viewState: ViewState) -> Unit,
+    minActiveState: Lifecycle.State = Lifecycle.State.STARTED
+) {
+    launchAndRepeatWithViewLifecycle(minActiveState) {
+        viewState.collectLatest {
+            updateScreenState.invoke(it)
+        }
+    }
+}
+
+inline fun <ViewState> Fragment.collectUiStateByFlowWithoutSuspend(
+    viewState: Flow<ViewState>,
+    crossinline updateScreenState: (viewState: ViewState) -> Unit,
     minActiveState: Lifecycle.State = Lifecycle.State.STARTED
 ) {
     launchAndRepeatWithViewLifecycle(minActiveState) {

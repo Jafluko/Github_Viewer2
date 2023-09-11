@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="4dp"
-        android:text="Internet Connection Failed"
+        android:text="@string/connection"
         android:visibility="gone"/>
 
 </LinearLayout>

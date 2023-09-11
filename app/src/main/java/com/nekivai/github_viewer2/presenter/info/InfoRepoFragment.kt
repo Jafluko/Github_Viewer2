@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nekivai.github_viewer2.R
@@ -57,12 +58,20 @@ class InfoRepoFragment : Fragment() {
 
     private fun updateStateView(viewState: InfoRepoViewState) {
         binding.apply {
+            globalProgressBar.isVisible = viewState.isLoadInfo()
+            mainContainer.isVisible = !viewState.isLoadInfo()
             avatar.loadUriWithCover(
                 uri = viewState.avatarUser
             )
             title.text = viewState.fullName
             description.text = viewState.description
+
+            progressBar.isVisible = viewState.isLoadList()
+            listIssue.isVisible = !viewState.isLoadList()
             adapterIssue.submitList(viewState.listIssue)
+
+            textIssue.isVisible = viewState.isShowLabelIssue()
+            textIssue.text = getString(R.string.issue_empty)
         }
     }
 
