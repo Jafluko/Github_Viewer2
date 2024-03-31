@@ -1,5 +1,6 @@
 package com.nekivai.github_viewer2.presenter.search
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -13,32 +14,30 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
-import androidx.paging.LoadStates
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nekivai.github_viewer2.R
 import com.nekivai.github_viewer2.common.collectUiEffect
 import com.nekivai.github_viewer2.common.collectUiStateByFlow
 import com.nekivai.github_viewer2.common.collectUiStateByFlowWithoutSuspend
+import com.nekivai.github_viewer2.common.getAppComponent
 import com.nekivai.github_viewer2.common.safeNavigate
 import com.nekivai.github_viewer2.common.showToast
 import com.nekivai.github_viewer2.databinding.FragmentSearchBinding
 import com.nekivai.github_viewer2.domain.models.SearchItem
 import com.nekivai.github_viewer2.presenter.search.adapter.FooterAdapter
 import com.nekivai.github_viewer2.presenter.search.adapter.SearchAdapter
-import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-@AndroidEntryPoint
 class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding: FragmentSearchBinding
         get() = checkNotNull(_binding)
 
-    private val viewModel: SearchViewModel by viewModels()
+    @Inject lateinit var viewModel: SearchViewModel
 
     private val listAdapter: SearchAdapter by lazy {
         SearchAdapter(
@@ -48,6 +47,11 @@ class SearchFragment : Fragment() {
 
     private var searchView: SearchView? = null
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        getAppComponent().inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

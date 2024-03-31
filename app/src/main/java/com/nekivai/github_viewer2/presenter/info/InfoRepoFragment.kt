@@ -1,36 +1,35 @@
 package com.nekivai.github_viewer2.presenter.info
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nekivai.github_viewer2.R
 import com.nekivai.github_viewer2.common.collectUiState
+import com.nekivai.github_viewer2.common.getAppComponent
 import com.nekivai.github_viewer2.common.loadUriWithCover
 import com.nekivai.github_viewer2.databinding.FragmentInfoBinding
 import com.nekivai.github_viewer2.presenter.info.adapter.IssueAdapter
-import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-@AndroidEntryPoint
 class InfoRepoFragment : Fragment() {
 
     private var _binding: FragmentInfoBinding? = null
     private val binding: FragmentInfoBinding
         get() = checkNotNull(_binding)
 
-    private val viewModel: InfoViewModel by viewModels()
+    @Inject lateinit var viewModel: InfoViewModel
 
     private val adapterIssue = IssueAdapter()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        getAppComponent().inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

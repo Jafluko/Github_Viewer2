@@ -1,8 +1,11 @@
 package com.nekivai.github_viewer2.common
 
+import android.app.Activity
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import com.nekivai.github_viewer2.AppComponent
+import com.nekivai.github_viewer2.GitApp
 
 fun Fragment.showToast(uiText: UiText) {
     when (uiText) {
@@ -30,3 +33,9 @@ fun Fragment.safeNavigate(direction: NavDirections) {
         findNavController().navigate(direction)
     }
 }
+
+fun Fragment.getAppComponent(): AppComponent =
+    (requireActivity().application as GitApp).appComponent
+
+fun Activity.getAppComponent(): AppComponent =
+    (application as GitApp).appComponent

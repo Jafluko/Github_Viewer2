@@ -3,8 +3,6 @@ package com.nekivai.github_viewer2.data.di
 import com.nekivai.github_viewer2.BuildConfig
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -14,7 +12,6 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
 class NetworkProvider {
 
     @Provides
