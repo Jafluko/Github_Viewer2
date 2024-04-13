@@ -1,12 +1,10 @@
 package com.nekivai.github_viewer2.presenter.info
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nekivai.github_viewer2.common.Response
 import com.nekivai.github_viewer2.domain.use_case.IssueUseCase
 import com.nekivai.github_viewer2.domain.use_case.RepoUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -14,15 +12,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
 class InfoViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val repoUseCase: RepoUseCase,
     private val issueUseCase: IssueUseCase,
 ) : ViewModel() {
 
-    private val ownerName: String? = savedStateHandle["ownerName"]
-    private val repoName: String? = savedStateHandle["repoName"]
+    private val ownerName: String? = null
+    private val repoName: String? = null
 
     private val _viewState = MutableStateFlow(InfoRepoViewState())
     val viewState = _viewState.asStateFlow()

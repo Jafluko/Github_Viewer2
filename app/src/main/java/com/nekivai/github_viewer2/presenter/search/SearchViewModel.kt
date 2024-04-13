@@ -4,11 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.nekivai.github_viewer2.domain.models.SearchItem
+import com.github.terrakok.cicerone.Router
 import com.nekivai.github_viewer2.domain.use_case.SearchUserCase
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.nekivai.github_viewer2.navigation.FragmentScreens
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -16,16 +15,13 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.retry
-import kotlinx.coroutines.flow.switchMap
-import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
 class SearchViewModel @Inject constructor(
     private val searchUserCase: SearchUserCase,
+    private val router: Router
 ) : ViewModel() {
 
     private val _contextQuery = MutableStateFlow(EMPTY_CONTEXT)
@@ -60,14 +56,17 @@ class SearchViewModel @Inject constructor(
     }
 
     fun moveInfoRepo(ownerName: String, repoName: String) {
-        viewModelScope.launch {
+        /*viewModelScope.launch {
             _viewEffects.emit(SearchViewEffects.MoveInfoRepo(ownerName, repoName))
-        }
+        }*/
+        router.navigateTo(FragmentScreens.getInfoRepoFragment())
     }
 
     companion object {
         private const val EMPTY_CONTEXT = "null"
         private const val DEFAULT_LIMIT = 16
         private const val DEFAULT_DELAY_PRINTING = 300L
+
+
     }
 }
