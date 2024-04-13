@@ -79,4 +79,8 @@ class InfoRepoFragment : Fragment() {
         super.onDestroyView()
     }
 
+    companion object {
+
+        fun newInstance() = InfoRepoFragment()
+    }
 }

@@ -1,6 +1,5 @@
 package com.nekivai.github_viewer2.presenter.search
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -23,7 +22,6 @@ import com.nekivai.github_viewer2.common.collectUiEffect
 import com.nekivai.github_viewer2.common.collectUiStateByFlow
 import com.nekivai.github_viewer2.common.collectUiStateByFlowWithoutSuspend
 import com.nekivai.github_viewer2.common.getAppComponent
-import com.nekivai.github_viewer2.common.safeNavigate
 import com.nekivai.github_viewer2.common.showToast
 import com.nekivai.github_viewer2.databinding.FragmentSearchBinding
 import com.nekivai.github_viewer2.domain.models.SearchItem
@@ -47,10 +45,9 @@ class SearchFragment : Fragment() {
 
     private var searchView: SearchView? = null
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
+    override fun onCreate(savedInstanceState: Bundle?) {
         getAppComponent().inject(this)
+        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(
@@ -110,12 +107,12 @@ class SearchFragment : Fragment() {
             }
 
             is SearchViewEffects.MoveInfoRepo -> {
-                safeNavigate(
+                /*safeNavigate(
                     SearchFragmentDirections.actionSearchToInfo(
                         ownerName = viewEffects.ownerName,
                         repoName = viewEffects.repoName,
                     )
-                )
+                )*/
             }
         }
     }
@@ -149,5 +146,9 @@ class SearchFragment : Fragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    companion object {
+        fun newInstance() = SearchFragment()
     }
 }

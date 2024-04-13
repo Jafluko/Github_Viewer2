@@ -2,8 +2,6 @@ package com.nekivai.github_viewer2.common
 
 import android.app.Activity
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.findNavController
 import com.nekivai.github_viewer2.AppComponent
 import com.nekivai.github_viewer2.GitApp
 
@@ -25,12 +23,6 @@ fun Fragment.showToast(resId: Int, vararg values: String) {
     } else {
         val activity = activity ?: return
         activity.showToast(activity.resources.getString(resId, *values))
-    }
-}
-
-fun Fragment.safeNavigate(direction: NavDirections) {
-    findNavController().currentDestination?.getAction(direction.actionId)?.run {
-        findNavController().navigate(direction)
     }
 }
 

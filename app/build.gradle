@@ -61,8 +61,7 @@ dependencies {
     implementation 'com.google.dagger:dagger:2.48'
     kapt 'com.google.dagger:dagger-compiler:2.20'
 
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.2")
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.2")
+    implementation("com.github.terrakok:cicerone:7.1")
 
     implementation("androidx.paging:paging-runtime:3.2.1")
 

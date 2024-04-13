@@ -5,7 +5,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
+import com.github.terrakok.cicerone.Router
 import com.nekivai.github_viewer2.domain.use_case.SearchUserCase
+import com.nekivai.github_viewer2.navigation.FragmentScreens
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -19,6 +21,7 @@ import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(
     private val searchUserCase: SearchUserCase,
+    private val router: Router
 ) : ViewModel() {
 
     private val _contextQuery = MutableStateFlow(EMPTY_CONTEXT)
@@ -53,9 +56,10 @@ class SearchViewModel @Inject constructor(
     }
 
     fun moveInfoRepo(ownerName: String, repoName: String) {
-        viewModelScope.launch {
+        /*viewModelScope.launch {
             _viewEffects.emit(SearchViewEffects.MoveInfoRepo(ownerName, repoName))
-        }
+        }*/
+        router.navigateTo(FragmentScreens.getInfoRepoFragment())
     }
 
     companion object {
