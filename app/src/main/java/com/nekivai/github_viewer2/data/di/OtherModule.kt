@@ -4,7 +4,7 @@ import androidx.fragment.app.FragmentActivity
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
-import com.nekivai.github_viewer2.presenter.MainActivity
+import com.nekivai.github_viewer2.MainActivity
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.Dispatchers
