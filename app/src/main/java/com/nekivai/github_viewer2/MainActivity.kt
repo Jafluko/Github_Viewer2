@@ -6,10 +6,15 @@ import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
 import com.nekivai.github_viewer2.common.CiceroneNavigator
 import com.nekivai.github_viewer2.common.getAppComponent
+import com.nekivai.github_viewer2.core.injectViewModel
+import com.nekivai.github_viewer2.data.di.DaggerMainActivityComponent
+import com.nekivai.github_viewer2.data.di.MainActivityComponent
 import com.nekivai.github_viewer2.navigation.FragmentScreens
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var component: MainActivityComponent
 
     @Inject
     lateinit var router: Router
@@ -18,8 +23,15 @@ class MainActivity : AppCompatActivity() {
 
     private val navigator = CiceroneNavigator(this, R.id.container_fragment)
 
+    private val viewModel: MainActivityViewModel by injectViewModel {
+        component.provideViewModel()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        getAppComponent().inject(this)
+        component = DaggerMainActivityComponent.builder()
+            .appComponent(getAppComponent())
+            .build()
+        component.inject(this)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

@@ -1,10 +1,8 @@
 package com.nekivai.github_viewer2.data.di
 
-import androidx.fragment.app.FragmentActivity
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
-import com.nekivai.github_viewer2.MainActivity
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.Dispatchers
@@ -29,6 +27,4 @@ class OtherModule {
     @Singleton
     fun getRouter(cicerone: Cicerone<Router>): Router = cicerone.router
 
-    @Provides
-    fun provideFragmentActivity(): FragmentActivity = MainActivity()
 }

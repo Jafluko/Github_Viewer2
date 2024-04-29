@@ -66,7 +66,5 @@ class SearchViewModel @Inject constructor(
         private const val EMPTY_CONTEXT = "null"
         private const val DEFAULT_LIMIT = 16
         private const val DEFAULT_DELAY_PRINTING = 300L
-
-
     }
 }

@@ -23,19 +23,25 @@ import com.nekivai.github_viewer2.common.collectUiStateByFlow
 import com.nekivai.github_viewer2.common.collectUiStateByFlowWithoutSuspend
 import com.nekivai.github_viewer2.common.getAppComponent
 import com.nekivai.github_viewer2.common.showToast
+import com.nekivai.github_viewer2.core.injectViewModel
 import com.nekivai.github_viewer2.databinding.FragmentSearchBinding
+import com.nekivai.github_viewer2.feature.search.di.DaggerSearchComponent
+import com.nekivai.github_viewer2.feature.search.di.SearchComponent
 import com.nekivai.github_viewer2.feature.search.domain.models.SearchItem
 import com.nekivai.github_viewer2.feature.search.presenter.adapter.FooterAdapter
 import com.nekivai.github_viewer2.feature.search.presenter.adapter.SearchAdapter
-import javax.inject.Inject
 
 class SearchFragment : Fragment() {
+
+    private lateinit var component: SearchComponent
 
     private var _binding: FragmentSearchBinding? = null
     private val binding: FragmentSearchBinding
         get() = checkNotNull(_binding)
 
-    @Inject lateinit var viewModel: SearchViewModel
+    private val viewModel: SearchViewModel by injectViewModel {
+        component.provideViewModel()
+    }
 
     private val listAdapter: SearchAdapter by lazy {
         SearchAdapter(
@@ -46,7 +52,10 @@ class SearchFragment : Fragment() {
     private var searchView: SearchView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        getAppComponent().inject(this)
+        component = DaggerSearchComponent.builder()
+            .appComponent(getAppComponent())
+            .build()
+        component.inject(this)
         super.onCreate(savedInstanceState)
     }
 

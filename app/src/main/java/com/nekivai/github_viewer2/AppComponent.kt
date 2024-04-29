@@ -1,12 +1,15 @@
 package com.nekivai.github_viewer2
 
+import com.github.terrakok.cicerone.NavigatorHolder
+import com.github.terrakok.cicerone.Router
 import com.nekivai.github_viewer2.data.di.ApiModule
 import com.nekivai.github_viewer2.data.di.NetworkProvider
 import com.nekivai.github_viewer2.data.di.OtherModule
 import com.nekivai.github_viewer2.data.di.RepositoriesModule
 import com.nekivai.github_viewer2.feature.info_repo.presenter.InfoRepoFragment
-import com.nekivai.github_viewer2.feature.search.presenter.SearchFragment
+import com.nekivai.github_viewer2.feature.search.domain.repositories.SearchRepository
 import dagger.Component
+import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Singleton
 
 @Singleton
@@ -20,9 +23,11 @@ import javax.inject.Singleton
 )
 interface AppComponent {
 
-    fun inject(activity: MainActivity)
-
     fun inject(fragment: InfoRepoFragment)
 
-    fun inject(fragment: SearchFragment)
+    fun provideDispatcherIO(): CoroutineDispatcher
+    fun provideRouter(): Router
+    fun provideNavigatorHolder(): NavigatorHolder
+
+    fun provideSearchRepository(): SearchRepository
 }
