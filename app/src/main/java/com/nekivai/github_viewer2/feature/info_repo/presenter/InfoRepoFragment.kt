@@ -1,10 +1,10 @@
 package com.nekivai.github_viewer2.feature.info_repo.presenter
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,23 +12,35 @@ import com.nekivai.github_viewer2.R
 import com.nekivai.github_viewer2.common.collectUiState
 import com.nekivai.github_viewer2.common.getAppComponent
 import com.nekivai.github_viewer2.common.loadUriWithCover
+import com.nekivai.github_viewer2.core.assistedViewModel
 import com.nekivai.github_viewer2.databinding.FragmentInfoBinding
+import com.nekivai.github_viewer2.feature.info_repo.di.DaggerInfoRepositoryComponent
+import com.nekivai.github_viewer2.feature.info_repo.di.InfoRepositoryComponent
 import com.nekivai.github_viewer2.feature.info_repo.presenter.adapter.IssueAdapter
-import javax.inject.Inject
 
 class InfoRepoFragment : Fragment() {
+
+    private lateinit var component: InfoRepositoryComponent
 
     private var _binding: FragmentInfoBinding? = null
     private val binding: FragmentInfoBinding
         get() = checkNotNull(_binding)
 
-    @Inject lateinit var viewModel: InfoViewModel
+    private val viewModel: InfoViewModel by assistedViewModel {
+        component.provideInfoViewModelFactory().create(
+            ownerName = arguments?.getString(KEY_OWNER_NAME),
+            repoName = arguments?.getString(KEY_REPO_NAME),
+        )
+    }
 
     private val adapterIssue = IssueAdapter()
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        getAppComponent().inject(this)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        component = DaggerInfoRepositoryComponent.builder()
+            .appComponent(getAppComponent())
+            .build()
+        component.inject(this)
+        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(
@@ -81,6 +93,17 @@ class InfoRepoFragment : Fragment() {
 
     companion object {
 
-        fun newInstance() = InfoRepoFragment()
+        private const val KEY_OWNER_NAME = "KEY_OWNER_NAME"
+        private const val KEY_REPO_NAME = "KEY_REPO_NAME"
+
+        fun newInstance(
+            ownerName: String?,
+            repoName: String?
+        ) = InfoRepoFragment().apply {
+            arguments = bundleOf(
+                KEY_OWNER_NAME to ownerName,
+                KEY_REPO_NAME to repoName,
+            )
+        }
     }
 }

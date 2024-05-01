@@ -56,10 +56,7 @@ class SearchViewModel @Inject constructor(
     }
 
     fun moveInfoRepo(ownerName: String, repoName: String) {
-        /*viewModelScope.launch {
-            _viewEffects.emit(SearchViewEffects.MoveInfoRepo(ownerName, repoName))
-        }*/
-        router.navigateTo(FragmentScreens.getInfoRepoFragment())
+        router.navigateTo(FragmentScreens.getInfoRepoFragment(ownerName, repoName))
     }
 
     companion object {
