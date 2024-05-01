@@ -1,7 +1,7 @@
 package com.nekivai.github_viewer2.common
 
-import android.app.Activity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.nekivai.github_viewer2.AppComponent
 import com.nekivai.github_viewer2.GitApp
 
@@ -29,5 +29,5 @@ fun Fragment.showToast(resId: Int, vararg values: String) {
 fun Fragment.getAppComponent(): AppComponent =
     (requireActivity().application as GitApp).appComponent
 
-fun Activity.getAppComponent(): AppComponent =
+fun FragmentActivity.getAppComponent(): AppComponent =
     (application as GitApp).appComponent

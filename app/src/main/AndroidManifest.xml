@@ -16,8 +16,9 @@
         android:theme="@style/Theme.Github_Viewer2"
         tools:targetApi="34">
         <activity
-            android:name=".presenter.MainActivity"
-            android:exported="true">
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

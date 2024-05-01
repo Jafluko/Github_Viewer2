@@ -1,9 +1,9 @@
 package com.nekivai.github_viewer2.data.source.network
 
-import com.nekivai.github_viewer2.data.source.dto.IssueDto
-import com.nekivai.github_viewer2.data.source.dto.RepoDto
+import com.nekivai.github_viewer2.feature.info_repo.data.dto.IssueDto
+import com.nekivai.github_viewer2.feature.info_repo.data.dto.RepoDto
 import com.nekivai.github_viewer2.data.source.dto.ResponseDto
-import com.nekivai.github_viewer2.data.source.dto.SearchItemDto
+import com.nekivai.github_viewer2.feature.search.data.dto.SearchItemDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
