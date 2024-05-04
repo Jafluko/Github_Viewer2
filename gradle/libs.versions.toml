@@ -1,0 +1,52 @@
+[versions]
+# Libs
+activityKtx = "1.9.0"
+appcompat = "1.6.1"
+cicerone = "7.1"
+constraintlayout = "2.1.4"
+coreKtx = "1.13.1"
+dagger = "2.51.1"
+espressoCore = "3.5.1"
+fragmentKtx = "1.7.0"
+glide = "4.16.0"
+junit = "4.13.2"
+junitVersion = "1.1.5"
+lifecycleLivedataKtx = "2.7.0"
+loggingInterceptor = "5.0.0-alpha.14"
+material = "1.12.0"
+material3 = "1.2.1"
+pagingRuntimeKtx = "3.2.1"
+retrofit = "2.11.0"
+
+#Plugins
+androidPlugin = "8.4.0"
+jetbrainsAndroidPlugin = "1.9.20"
+kspPlugin = "1.9.20-1.0.14"
+
+[libraries]
+androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
+androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
+androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
+androidx-junit = { module = "androidx.test.ext:junit", version.ref = "junitVersion" }
+androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
+androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleLivedataKtx" }
+androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
+cicerone = { module = "com.github.terrakok:cicerone", version.ref = "cicerone" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
+dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+junit = { module = "junit:junit", version.ref = "junit" }
+logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+material-version3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidPlugin" }
+android-library = { id = "com.android.library", version.ref = "androidPlugin" }
+jetbrains-android = { id = "org.jetbrains.kotlin.android", version.ref = "jetbrainsAndroidPlugin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "kspPlugin" }
