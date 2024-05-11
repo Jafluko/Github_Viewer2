@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.jetbrains.android) apply false
     alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.jetbrains.kotlin.jvm) apply false
 }
 
 subprojects {
@@ -23,6 +24,10 @@ subprojects {
             compileOptions {
                 sourceCompatibility = JavaVersion.VERSION_17
                 targetCompatibility = JavaVersion.VERSION_17
+            }
+
+            composeOptions {
+                kotlinCompilerExtensionVersion = "1.5.5"
             }
 
             plugins.matching { it is KotlinAndroidProjectExtension }.whenPluginAdded{

@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "Github_Viewer2"
 include(":app")
 include(":feature:authorization")
+include(":core:ui_kit")
