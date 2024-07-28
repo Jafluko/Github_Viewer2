@@ -1,27 +1,27 @@
 [versions]
 # Libs
-activityKtx = "1.9.0"
-appcompat = "1.6.1"
+activityKtx = "1.9.1"
+appcompat = "1.7.0"
 cicerone = "7.1"
 constraintlayout = "2.1.4"
 coreKtx = "1.13.1"
 dagger = "2.51.1"
-espressoCore = "3.5.1"
-fragmentKtx = "1.7.0"
+espressoCore = "3.6.1"
+fragmentKtx = "1.8.2"
 glide = "4.16.0"
 junit = "4.13.2"
-junitVersion = "1.1.5"
-lifecycleLivedataKtx = "2.7.0"
+junitVersion = "1.2.1"
+lifecycleLivedataKtx = "2.8.4"
 loggingInterceptor = "5.0.0-alpha.14"
 material = "1.12.0"
 material3 = "1.2.1"
-pagingRuntimeKtx = "3.2.1"
+pagingRuntimeKtx = "3.3.1"
 retrofit = "2.11.0"
 
 #Plugins
-androidPlugin = "8.4.0"
-jetbrainsAndroidPlugin = "1.9.20"
-kspPlugin = "1.9.20-1.0.14"
+androidPlugin = "8.4.2"
+kotlin = "2.0.0"
+kspPlugin = "2.0.0-1.0.23"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
@@ -48,5 +48,5 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidPlugin" }
 android-library = { id = "com.android.library", version.ref = "androidPlugin" }
-jetbrains-android = { id = "org.jetbrains.kotlin.android", version.ref = "jetbrainsAndroidPlugin" }
+jetbrains-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspPlugin" }
