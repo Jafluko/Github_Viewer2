@@ -2,9 +2,6 @@ package com.nekivai.github_viewer2
 
 import android.app.Application
 import com.nekivai.android.ComponentRegistry
-import com.nekivai.github_viewer2.data.di.ApiModule
-import com.nekivai.github_viewer2.data.di.NetworkProvider
-import com.nekivai.github_viewer2.data.di.OtherModule
 
 open class GitApp : Application() {
 
@@ -15,11 +12,8 @@ open class GitApp : Application() {
 
         ComponentRegistry.registerPersistentComponent(
             DaggerAppComponent
-                .builder()
-                .apiModule(ApiModule())
-                .networkProvider(NetworkProvider())
-                .otherModule(OtherModule())
-                .build()
+                .factory()
+                .create()
         )
     }
 }

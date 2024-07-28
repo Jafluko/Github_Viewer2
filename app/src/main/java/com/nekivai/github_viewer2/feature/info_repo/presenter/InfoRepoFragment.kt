@@ -23,9 +23,9 @@ import com.nekivai.github_viewer2.feature.info_repo.presenter.adapter.IssueAdapt
 class InfoRepoFragment : Fragment() {
 
     private val component: InfoRepositoryComponent by registerComponent {
-        DaggerInfoRepositoryComponent.builder()
-            .appComponent(ComponentRegistry.findComponent(AppComponent::class))
-            .build()
+        DaggerInfoRepositoryComponent
+            .factory()
+            .create(ComponentRegistry.findComponent(AppComponent::class))
     }
 
     private var _binding: FragmentInfoBinding? = null

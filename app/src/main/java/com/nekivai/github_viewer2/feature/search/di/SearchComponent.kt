@@ -11,5 +11,11 @@ import dagger.Component
     modules = [SearchModule::class]
 )
 interface SearchComponent : ViewModelProviderFactory {
+
+    @Component.Factory
+    interface Factory {
+        fun create(appComponent: AppComponent): SearchComponent
+    }
+
     fun inject(fragment: SearchFragment)
 }

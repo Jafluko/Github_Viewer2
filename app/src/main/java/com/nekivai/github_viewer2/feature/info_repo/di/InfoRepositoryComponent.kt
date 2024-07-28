@@ -11,6 +11,11 @@ import dagger.Component
 )
 interface InfoRepositoryComponent {
 
+    @Component.Factory
+    interface Factory {
+        fun create(appComponent: AppComponent): InfoRepositoryComponent
+    }
+
     fun inject(fragment: InfoRepoFragment)
 
     fun provideInfoViewModelFactory(): InfoViewModel.Factory

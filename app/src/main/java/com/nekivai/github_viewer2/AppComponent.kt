@@ -23,6 +23,11 @@ import javax.inject.Singleton
 )
 interface AppComponent {
 
+    @Component.Factory
+    interface Factory {
+        fun create(): AppComponent
+    }
+
     fun provideDispatcherIO(): CoroutineDispatcher
     fun provideRouter(): Router
     fun provideNavigatorHolder(): NavigatorHolder

@@ -36,9 +36,9 @@ import com.nekivai.github_viewer2.feature.search.presenter.adapter.SearchAdapter
 class SearchFragment : Fragment() {
 
     private val component: SearchComponent by registerComponent {
-        DaggerSearchComponent.builder()
-            .appComponent(ComponentRegistry.findComponent(AppComponent::class))
-            .build()
+        DaggerSearchComponent
+            .factory()
+            .create(ComponentRegistry.findComponent(AppComponent::class))
     }
 
     private var _binding: FragmentSearchBinding? = null
