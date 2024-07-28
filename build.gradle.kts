@@ -30,7 +30,7 @@ subprojects {
                     jvmToolchain(17)
                     sourceSets.all {
                         languageSettings {
-                            languageVersion = "2.0"
+                            languageVersion = libs.versions.kotlin.get()
                         }
                     }
                 }
