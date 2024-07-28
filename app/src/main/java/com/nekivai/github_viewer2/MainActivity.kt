@@ -4,8 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
+import com.nekivai.android.ComponentRegistry
+import com.nekivai.android.ComponentRegistry.registerComponent
 import com.nekivai.github_viewer2.common.CiceroneNavigator
-import com.nekivai.github_viewer2.common.getAppComponent
 import com.nekivai.github_viewer2.core.injectViewModel
 import com.nekivai.github_viewer2.data.di.DaggerMainActivityComponent
 import com.nekivai.github_viewer2.data.di.MainActivityComponent
@@ -14,7 +15,11 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var component: MainActivityComponent
+    private val component: MainActivityComponent by registerComponent {
+        DaggerMainActivityComponent.builder()
+            .appComponent(ComponentRegistry.findComponent(AppComponent::class))
+            .build()
+    }
 
     @Inject
     lateinit var router: Router
@@ -28,9 +33,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        component = DaggerMainActivityComponent.builder()
-            .appComponent(getAppComponent())
-            .build()
         component.inject(this)
 
         super.onCreate(savedInstanceState)

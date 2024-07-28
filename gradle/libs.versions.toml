@@ -50,3 +50,4 @@ android-application = { id = "com.android.application", version.ref = "androidPl
 android-library = { id = "com.android.library", version.ref = "androidPlugin" }
 jetbrains-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspPlugin" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

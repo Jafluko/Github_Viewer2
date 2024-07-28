@@ -8,9 +8,11 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.nekivai.android.ComponentRegistry
+import com.nekivai.android.ComponentRegistry.registerComponent
+import com.nekivai.github_viewer2.AppComponent
 import com.nekivai.github_viewer2.R
 import com.nekivai.github_viewer2.common.collectUiState
-import com.nekivai.github_viewer2.common.getAppComponent
 import com.nekivai.github_viewer2.common.loadUriWithCover
 import com.nekivai.github_viewer2.core.assistedViewModel
 import com.nekivai.github_viewer2.databinding.FragmentInfoBinding
@@ -20,7 +22,11 @@ import com.nekivai.github_viewer2.feature.info_repo.presenter.adapter.IssueAdapt
 
 class InfoRepoFragment : Fragment() {
 
-    private lateinit var component: InfoRepositoryComponent
+    private val component: InfoRepositoryComponent by registerComponent {
+        DaggerInfoRepositoryComponent.builder()
+            .appComponent(ComponentRegistry.findComponent(AppComponent::class))
+            .build()
+    }
 
     private var _binding: FragmentInfoBinding? = null
     private val binding: FragmentInfoBinding
@@ -36,9 +42,6 @@ class InfoRepoFragment : Fragment() {
     private val adapterIssue = IssueAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        component = DaggerInfoRepositoryComponent.builder()
-            .appComponent(getAppComponent())
-            .build()
         component.inject(this)
         super.onCreate(savedInstanceState)
     }

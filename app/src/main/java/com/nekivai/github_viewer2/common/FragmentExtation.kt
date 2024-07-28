@@ -26,8 +26,9 @@ fun Fragment.showToast(resId: Int, vararg values: String) {
     }
 }
 
+/*
 fun Fragment.getAppComponent(): AppComponent =
     (requireActivity().application as GitApp).appComponent
 
 fun FragmentActivity.getAppComponent(): AppComponent =
-    (application as GitApp).appComponent
+    (application as GitApp).appComponent*/

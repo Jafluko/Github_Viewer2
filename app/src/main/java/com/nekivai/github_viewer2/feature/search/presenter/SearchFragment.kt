@@ -17,11 +17,13 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.nekivai.android.ComponentRegistry
+import com.nekivai.android.ComponentRegistry.registerComponent
+import com.nekivai.github_viewer2.AppComponent
 import com.nekivai.github_viewer2.R
 import com.nekivai.github_viewer2.common.collectUiEffect
 import com.nekivai.github_viewer2.common.collectUiStateByFlow
 import com.nekivai.github_viewer2.common.collectUiStateByFlowWithoutSuspend
-import com.nekivai.github_viewer2.common.getAppComponent
 import com.nekivai.github_viewer2.common.showToast
 import com.nekivai.github_viewer2.core.injectViewModel
 import com.nekivai.github_viewer2.databinding.FragmentSearchBinding
@@ -33,7 +35,11 @@ import com.nekivai.github_viewer2.feature.search.presenter.adapter.SearchAdapter
 
 class SearchFragment : Fragment() {
 
-    private lateinit var component: SearchComponent
+    private val component: SearchComponent by registerComponent {
+        DaggerSearchComponent.builder()
+            .appComponent(ComponentRegistry.findComponent(AppComponent::class))
+            .build()
+    }
 
     private var _binding: FragmentSearchBinding? = null
     private val binding: FragmentSearchBinding
@@ -52,9 +58,6 @@ class SearchFragment : Fragment() {
     private var searchView: SearchView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        component = DaggerSearchComponent.builder()
-            .appComponent(getAppComponent())
-            .build()
         component.inject(this)
         super.onCreate(savedInstanceState)
     }

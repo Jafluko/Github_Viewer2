@@ -14,3 +14,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Github_Viewer2"
 include(":app")
+include(":core:android")
