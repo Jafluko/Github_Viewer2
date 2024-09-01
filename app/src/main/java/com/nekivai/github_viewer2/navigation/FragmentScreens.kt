@@ -1,6 +1,7 @@
 package com.nekivai.github_viewer2.navigation
 
 import com.github.terrakok.cicerone.androidx.FragmentScreen
+import com.nekivai.app.AuthorizationFragment
 import com.nekivai.github_viewer2.feature.info_repo.presenter.InfoRepoFragment
 import com.nekivai.github_viewer2.feature.search.presenter.SearchFragment
 
@@ -11,4 +12,6 @@ object FragmentScreens {
         ownerName: String? = null,
         repoName: String? = null
     ) = FragmentScreen { InfoRepoFragment.newInstance(ownerName, repoName) }
+
+    fun getAuthorizationFragment() = FragmentScreen { AuthorizationFragment.getInstance() }
 }

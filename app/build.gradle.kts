@@ -33,6 +33,7 @@ android {
 dependencies {
 
     implementation(project(":core:android"))
+    implementation(project(":authorization:main"))
 
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.fragment.ktx)

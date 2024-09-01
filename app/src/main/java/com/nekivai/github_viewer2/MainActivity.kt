@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        router.navigateTo(FragmentScreens.getSearchFragment())
+        router.navigateTo(FragmentScreens.getAuthorizationFragment())
     }
 
     override fun onResumeFragments() {

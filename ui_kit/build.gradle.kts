@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.nekivai.main"
+    namespace = "com.nekivai.ui_kit"
 
     buildFeatures {
         compose = true
@@ -13,14 +13,6 @@ android {
 }
 
 dependencies {
-
-    implementation(project(":ui_kit"))
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
